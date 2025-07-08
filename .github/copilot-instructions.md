@@ -2,7 +2,7 @@
 - Project name: Platformer_Game
 - Unity version: Unity 2022.3.62f1
 - Active game object:
-  - Name: Pineapple
+  - Name: Particle System
   - Tag: Untagged
-  - Layer: PickUp
+  - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->

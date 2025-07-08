@@ -284,6 +284,10 @@ AnimatorStateMachine:
   - {fileID: -4338810360930338755}
   m_EntryTransitions: []
   m_StateMachineTransitions:
+  - first: {fileID: -4080539113310737193}
+    second:
+    - {fileID: -5601228568294446566}
+    - {fileID: 1901700492151168391}
   - first: {fileID: -901763935123440306}
     second:
     - {fileID: 1750822432664804497}
@@ -292,10 +296,6 @@ AnimatorStateMachine:
     - {fileID: 321454723647565476}
     - {fileID: 1487043466649972482}
     - {fileID: -6014471867286724543}
-  - first: {fileID: -4080539113310737193}
-    second:
-    - {fileID: -5601228568294446566}
-    - {fileID: 1901700492151168391}
   - first: {fileID: 8052266657848205523}
     second:
     - {fileID: 1547964932501009806}
@@ -930,7 +930,7 @@ AnimatorController:
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
-    m_DefaultBool: 0
+    m_DefaultBool: 1
     m_Controller: {fileID: 9100000}
   - m_Name: isOnWall
     m_Type: 4
