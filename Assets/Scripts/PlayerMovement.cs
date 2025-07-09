@@ -131,7 +131,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnMove(InputAction.CallbackContext context)
     {
-      moveInput = context.ReadValue<Vector2>();
+        if (PauseMenu.GameIsPaused)
+            return;
+
+        moveInput = context.ReadValue<Vector2>();
 
 
         if (IsAlive)
@@ -163,6 +166,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnRun(InputAction.CallbackContext context)
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
+
         if (context.started)
         {
             IsRunning = true;
@@ -175,6 +182,10 @@ public class PlayerMovement : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext context)
     {
+        if (PauseMenu.GameIsPaused)
+            return;
+
+
         if (context.started)
         {
             animator.SetTrigger(Animations.attackTrigger);
