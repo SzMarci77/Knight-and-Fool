@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class Attack : MonoBehaviour
 {
-    Collider2D attackCollider;
+    private Collider2D attackCollider;
 
+    [Header("Attack Settings")]
     public int attackDamage = 10;
     public Vector2 knockback = Vector2.zero;
 
@@ -17,20 +18,25 @@ public class Attack : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+    #if UNITY_EDITOR
         Debug.Log("Játékos támadás triggerelve! Cél: " + collision.gameObject.name);
+    #endif
 
-        // Can be hit?
+        // Damageable komponenst keresünk
         Damageable damageable = collision.GetComponent<Damageable>();
-        if (damageable != null)
+
+        if (damageable != null && damageable.IsAlive)
         {
             Vector2 deliveredKnockback = transform.parent.localScale.x > 0 ? knockback : new Vector2(-knockback.x, knockback.y);
 
-            // Hit the target
+            // Támadás alkalmazása
             bool gotHit = damageable.Hit(attackDamage, deliveredKnockback);
 
             if (gotHit)
             {
-                Debug.Log(collision.name + " hit for " + attackDamage);
+        #if UNITY_EDITOR
+                Debug.Log(collision.name + " megsebezve ennyivel: " + attackDamage);
+        #endif
             }
         }
     }

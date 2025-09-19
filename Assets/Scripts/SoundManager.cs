@@ -24,8 +24,23 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Hang lejátszása a név alapján
     public void PlaySound2D(string soundName)
     {
-        sfx2DSource.PlayOneShot(sfxLibrary.GetClipFromName(soundName));
+        if (sfxLibrary == null || sfx2DSource == null)
+        {
+            Debug.LogWarning("SoundManager: Hiányzó referencia az Inspectorban!");
+            return;
+        }
+
+        AudioClip clip = sfxLibrary.GetClipFromName(soundName);
+        if (clip != null)
+        {
+            sfx2DSource.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogWarning($"SoundManager: '{soundName}' nem található a SoundLibrary-ban!");
+        }
     }
 }

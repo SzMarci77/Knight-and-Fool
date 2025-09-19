@@ -11,31 +11,22 @@ public class Damageable : MonoBehaviour
 
     Animator animator;
 
-    [SerializeField]
-    private int _maxHealth = 100;
+    [SerializeField] private int _maxHealth = 100;
+    [SerializeField] private int _health = 100;
+    [SerializeField] private bool _isAlive = true;
+
+    [Header("Invincibility Settings")]
+    [SerializeField] private bool isInvincible = false;
+    public float invincibilityTime = 0.25f;
 
     public int MaxHealth
     {
-        get
-        {
-            return _maxHealth;
-        }
-        set
-        {
-            _maxHealth = value;
-        }
+        get => _maxHealth;
+        set => _maxHealth = value;
     }
 
-    [SerializeField]
-    private int _health = 100;
 
-    [SerializeField]
-    private bool _isAlive = true;
-
-    [SerializeField]
-    private bool isInvincible = false;
     private float timeSinceHit = 0;
-    public float invincibilityTime = 0.25f;
 
     public bool IsAlive
     {
@@ -58,17 +49,15 @@ public class Damageable : MonoBehaviour
 
     public int Health
     {
-        get
-        {
-            return _health;
-        }
+        get => _health;
         set
         {
-            _health = value;
+            //Ne menjenjen a health 0 alá vagy maxHealth fölé
+            _health = Mathf.Clamp(value, 0, MaxHealth);
             healthChanged?.Invoke(_health, MaxHealth);
 
             //if health = 0, character is no longer alive
-            if (_health <= 0)
+            if (_health <= 0 && IsAlive)
             {
                 IsAlive = false;
             }
@@ -106,23 +95,29 @@ public class Damageable : MonoBehaviour
         }
     }
 
-    //Took damage or not
+    //Kapott-e sebzést
     public bool Hit(int damage, Vector2 knockback)
     {
-        if (_isAlive && !isInvincible) 
-        { 
+        if (_isAlive && !isInvincible)
+        {
             Health -= damage;
-            isInvincible = true;
-
             animator.SetTrigger(Animations.hitTrigger);
             LockVelocity = true;
+
             damageableHit?.Invoke(damage, knockback);
             CharacterEvents.characterDamaged.Invoke(gameObject, damage);
 
+            StartCoroutine(InvincibilityCoroutine());
             return true;
         }
-        // Unable to hit
         return false;
+    }
+
+    private IEnumerator InvincibilityCoroutine()
+    {
+        isInvincible = true;
+        yield return new WaitForSeconds(invincibilityTime);
+        isInvincible = false;
     }
 
     public bool Heal(int healthRestore)
@@ -133,7 +128,7 @@ public class Damageable : MonoBehaviour
             int actualHeal = Mathf.Min(maxHeal, healthRestore);
             Health += actualHeal;
 
-            CharacterEvents.characterHealed(gameObject, actualHeal);
+            CharacterEvents.characterHealed?.Invoke(gameObject, actualHeal);
             return true;
         }
         return false;

@@ -25,10 +25,13 @@ public class HealthText : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
+        //Felfelé mozgás
         textTransform.position += moveSpeed * Time.deltaTime;
+
 
         timeElapsed += Time.deltaTime;
 
+        //Fade out
         if (timeElapsed < timeToFade)
         {
             float fadeAlpha = startColor.a * (1 - (timeElapsed / timeToFade));

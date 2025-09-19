@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -48,8 +48,16 @@ public class FlyingEye : MonoBehaviour
 
     private void Start()
     {
+        if (waypoints == null || waypoints.Count == 0)
+        {
+            Debug.LogError($"{name}: nincs beállítva waypoint!");
+            enabled = false;
+            return;
+        }
+
         nextWaypoint = waypoints[waypointNum];
     }
+
 
     private void Update()
     {
@@ -73,23 +81,23 @@ public class FlyingEye : MonoBehaviour
 
     private void Flight()
     {
-        // Fly to the next waypoint
+        // Következő waypoint felé irány
         Vector2 directionToWaypoint = (nextWaypoint.position - transform.position).normalized;
 
-        // Check if we have reached the waypoint already
+        // Elérte-e a waypointot
         float distance = Vector2.Distance(nextWaypoint.position, transform.position);
 
         rb.velocity = directionToWaypoint * flightSpeed;
         UpdateDirection();
 
-        // See if we need to switch waypoints
-        if(distance <= waypointReachedDistance)
+        // Kellet-e váltani a következő waypointra
+        if (distance <= waypointReachedDistance)
         {
             waypointNum++;
 
             if(waypointNum >= waypoints.Count)
             {
-                // Loop back to original waypoint
+                // Vissza az elsőhöz
                 waypointNum = 0;
             }
 
@@ -99,32 +107,34 @@ public class FlyingEye : MonoBehaviour
 
     private void UpdateDirection()
     {
-        Vector3 localScale = transform.localScale;
-        if(transform.localScale.x > 0)
+        if (rb.velocity.x > 0 && transform.localScale.x < 0)
         {
-            // Facing the right
-            if(rb.velocity.x < 0)
-            {
-                // Flip
-                transform.localScale = new Vector3(-1 * localScale.x, localScale.y, localScale.z);
-            }
+            Flip();
         }
-        else
+        else if (rb.velocity.x < 0 && transform.localScale.x > 0)
         {
-            // Facing the left
-            if (rb.velocity.x > 0)
-            {
-                // Flip
-                transform.localScale = new Vector3(-1 * localScale.x, localScale.y, localScale.z);
-            }
+            Flip();
         }
+    }
+
+    private void Flip()
+    {
+        Vector3 scale = transform.localScale;
+        scale.x *= -1;
+        transform.localScale = scale;
     }
 
     public void OnDeath()
     {
-        // Dead enemy falls to the ground
-        rb.gravityScale = 2f;
-        rb.velocity = new Vector2(0, rb.velocity.y);
-        deathCollidor.enabled = true;
+        if (rb != null)
+        {
+            rb.gravityScale = 2f;
+            rb.velocity = new Vector2(0, rb.velocity.y);
+        }
+
+        if (deathCollidor != null)
+        {
+            deathCollidor.enabled = true;
+        }
     }
 }

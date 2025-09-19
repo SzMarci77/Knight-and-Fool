@@ -1,20 +1,25 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDir), typeof(Damageable))]
 public class KnightEnemy : MonoBehaviour
 {
-    public DetectionZone attackZone;
-    public DetectionZone cliffDetectionZone;
-    public float maxSpeed = 3f;
-    public float walkAccelaration = 30f;
-    public float walkStopRate = 0.06f;
+    [Header("Detection Zones")]
+    [SerializeField] private DetectionZone attackZone;
+    [SerializeField] private DetectionZone cliffDetectionZone;
+
+    [Header("Movement Settings")]
+    [SerializeField] private float maxSpeed = 3f;
+    [SerializeField] private float walkAccelaration = 30f;
+    [SerializeField] private float walkStopRate = 0.06f;
 
     Rigidbody2D rb;
     TouchingDir touchingDir;
     Animator animator;
     Damageable damageable;
+
+    private Vector3 originalScale;
 
     public enum WalkingDirection { Right, Left };
     public Vector2 walkDirectionVector = Vector2.right;
@@ -23,62 +28,42 @@ public class KnightEnemy : MonoBehaviour
 
     public WalkingDirection WalkDirection
     {
-        get
-        {
-            return _walkDirection;
-        }
+        get => _walkDirection;
         set
         {
-            if (_walkDirection != value) 
+            if (_walkDirection != value)
             {
-                //Flip direction
-                gameObject.transform.localScale = new Vector2(gameObject.transform.localScale.x * -1, gameObject.transform.localScale.y);
-                
-                    if(value == WalkingDirection.Right)
-                    {
-                    walkDirectionVector = Vector2.right;
-                    }
-                    else if(value == WalkingDirection.Left)
-                    {
-                    walkDirectionVector = Vector2.left;
-                }
+                _walkDirection = value;
+                // Flip az eredeti skála alapján
+                transform.localScale = new Vector3(originalScale.x * (_walkDirection == WalkingDirection.Right ? 1 : -1),
+                                                   originalScale.y,
+                                                   originalScale.z);
+                walkDirectionVector = (_walkDirection == WalkingDirection.Right) ? Vector2.right : Vector2.left;
             }
-
-            _walkDirection = value;
         }
     }
 
     public bool _hastarget = false;
     public bool HasTarget
     {
-        get
-        {
-            return _hastarget;
-        }
-    private set
+        get => _hastarget;
+        private set
         {
             _hastarget = value;
-            animator.SetBool(Animations.hasTarget, value);
+            if (animator != null)
+                animator.SetBool(Animations.hasTarget, value);
         }
     }
 
-    public bool CanMove
-    {
-        get
-        {
-            return animator.GetBool(Animations.canMove);
-        }
-    }
+    public bool CanMove => animator != null && animator.GetBool(Animations.canMove);
 
     public float AttackCooldown
     {
-        get
-        {
-            return animator.GetFloat(Animations.attackCooldown);
-        }
+        get => animator != null ? animator.GetFloat(Animations.attackCooldown) : 0;
         private set
         {
-            animator.SetFloat(Animations.attackCooldown, Mathf.Max(value, 0));
+            if (animator != null)
+                animator.SetFloat(Animations.attackCooldown, Mathf.Max(value, 0));
         }
     }
 
@@ -89,11 +74,13 @@ public class KnightEnemy : MonoBehaviour
         animator = GetComponent<Animator>();
         animator.SetBool(Animations.canMove, true);
         damageable = GetComponent<Damageable>();
+        originalScale = transform.localScale;
 
     }
 
     void Update()
     {
+        // Ellenőrizzük, van-e támadható célpont
         HasTarget = attackZone.detectedColliders.Count > 0;
 
         if(AttackCooldown > 0 )
@@ -138,7 +125,7 @@ public class KnightEnemy : MonoBehaviour
         }
         else
         {
-            Debug.LogError("Nincs helyes �rt�k megadva: left/right");
+            Debug.LogError("Nincs helyes érték megadva: left/right");
         }
     }
     public void OnHit(int damage, Vector2 knockback)

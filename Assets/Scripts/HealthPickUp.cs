@@ -15,6 +15,7 @@ public class HealthPickUp : MonoBehaviour
     }
     private void Update()
     {
+        //Forgás effektus
         transform.eulerAngles += spinRotationSpeed * Time.deltaTime;
     }
 
@@ -28,7 +29,7 @@ public class HealthPickUp : MonoBehaviour
 
             if (waxHealed)
             {
-                // Play the pick-up sound
+                // Hang effekt
                 if (pickUpSource)
                 {
                     AudioSource.PlayClipAtPoint(pickUpSource.clip, gameObject.transform.position, pickUpSource.volume);

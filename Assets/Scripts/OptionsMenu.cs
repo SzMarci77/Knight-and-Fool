@@ -1,26 +1,32 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class OptionsMenu : MonoBehaviour
 {
-    public AudioSource backgroundMusic;
-    public Slider volumeSlider;
-    public Text volumeText;
-    public Toggle fullScToggle;
+    [SerializeField] private AudioSource backgroundMusic;
+    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private TextMeshProUGUI volumeText;
+    [SerializeField] private Toggle fullScToggle;
+
 
     void Start()
     {
-        fullScToggle.isOn = Screen.fullScreen;
+        // Fullscreen alapbeállítás
+        if(fullScToggle == null)
+        {
+            fullScToggle.isOn = Screen.fullScreen;
+            fullScToggle.onValueChanged.AddListener(SetFullscreen);
+        }
 
-        fullScToggle.onValueChanged.AddListener(SetFullscreen);
 
         if (volumeSlider == null || volumeText == null)
         {
-            Debug.LogWarning("Hi�nyz� UI komponens az OptionsMenu scriptben.");
+            Debug.LogWarning("Hiányzó UI komponens az OptionsMenu scriptben.");
             return;
         }
 
+        // Hangerő beállítása PlayerPrefs alapján, alapértelmezett érték 1.0 (100%)
         float volume = PlayerPrefs.HasKey("Volume") ? PlayerPrefs.GetFloat("Volume") : 1f;
 
         if (backgroundMusic != null)

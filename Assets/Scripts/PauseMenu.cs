@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
     public GameObject pauseMenuUI;
     void Update()
     {
+        // Escape gomb lenyomás ->  folytatás
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (GameIsPaused)

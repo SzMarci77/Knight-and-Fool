@@ -23,22 +23,29 @@ public class HealthBar : MonoBehaviour
         playerDamagable = player.GetComponent<Damageable>();
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
+        if (playerDamagable == null || healthSlider == null || healthBarText == null)
+        {
+            Debug.LogWarning("HealthBar: Hiányzó komponens!");
+            return;
+        }
 
+        // Health bar-t létrehozzuk
         healthSlider.value = CalculateSliderPercentage(playerDamagable.Health, playerDamagable.MaxHealth);
-        healthBarText.text = "HP " + playerDamagable.Health + " / " + playerDamagable.MaxHealth;
+        healthBarText.text = $"HP {playerDamagable.Health} / {playerDamagable.MaxHealth}";
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
-        playerDamagable.healthChanged.AddListener(OnPlayerHealthChanged);
+        if (playerDamagable != null)
+            playerDamagable.healthChanged.AddListener(OnPlayerHealthChanged);
     }
 
     private void OnDisable()
     {
-        playerDamagable.healthChanged.RemoveListener(OnPlayerHealthChanged);
+        if (playerDamagable != null)
+            playerDamagable.healthChanged.RemoveListener(OnPlayerHealthChanged);
     }
 
     private float CalculateSliderPercentage(float currentHealth, float maxHealth)
@@ -48,7 +55,7 @@ public class HealthBar : MonoBehaviour
 
     private void OnPlayerHealthChanged(int newHealth, int maxHealth)
     {
-        healthSlider.value = CalculateSliderPercentage(newHealth, maxHealth);
-        healthBarText.text = "HP " + newHealth + " / " + maxHealth;
+        if (healthSlider != null) healthSlider.value = CalculateSliderPercentage(newHealth, maxHealth);
+        if (healthBarText != null) healthBarText.text = $"HP {newHealth} / {maxHealth}";
     }
 }

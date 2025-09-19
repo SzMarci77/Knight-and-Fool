@@ -4662,6 +4662,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 519420028}
   parallaxEffect: 0.5
+--- !u!223 &260166056 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 9033565168723496110, guid: 013e77709c82a0945bff28bab2e91bad, type: 3}
+  m_PrefabInstance: {fileID: 3976875698880795147}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &358220714
 GameObject:
   m_ObjectHideFlags: 0
@@ -8246,6 +8251,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7343158266264271773, guid: 2723e14aef80f9849994f66fb226e29e, type: 3}
+      propertyPath: gameCanvas
+      value: 
+      objectReference: {fileID: 260166056}
     - target: {fileID: 8295169885524467914, guid: 2723e14aef80f9849994f66fb226e29e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

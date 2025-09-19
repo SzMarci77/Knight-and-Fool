@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public GameObject damageTextPrefab;
     public GameObject healthTextPrefab;
 
-    public Canvas gameCanvas;
+    [SerializeField] private Canvas gameCanvas;
 
     private void Awake()
     {
@@ -29,8 +29,8 @@ public class UIManager : MonoBehaviour
 
     public void CharacterTookDamage(GameObject character, int damageReceived)
     {
-        // Create text at character hit
-        Vector3 spawnPosition = Camera.main.WorldToScreenPoint(character.transform.position);
+        // Sebzés esetén szöveg létrehozása a karakter pozícióján
+        Vector3 spawnPosition = Camera.main.WorldToScreenPoint(character.transform.position + Vector3.up * 1f);
 
         TMP_Text tmpText = Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
     
