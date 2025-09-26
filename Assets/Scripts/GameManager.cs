@@ -1,73 +1,52 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.Events;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
-    [Header("Game State")]
-    public bool isGameOver = false;
-    public int score = 0;
-
-    [Header("Events")]
-    public UnityEvent onGameOver;
-    public UnityEvent onGameRestart;
-    public UnityEvent<int> onScoreChanged;
+    // public Text pointsText;
+    public static GameManager Instance;
+    public GameObject gameOverScreen;
+    //Késleltetés
+    public float delayBeforeStop = 1f;
 
     private void Awake()
     {
-        // Singleton biztosítás
-        if (Instance != null && Instance != this)
+        if (Instance == null)
+            Instance = this;
+    }
+    /*
+    public void SetUp(int score)
+    {
+        gameObject.SetActive(true);
+        pointsText.text = score.ToString() + " POINTS";
+    }
+    */
+    public void GameOver ()
+    {
+        if (gameOverScreen != null)
         {
-            Destroy(gameObject);
-            return;
+            gameOverScreen.SetActive(true);
         }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
+        // Játék csak késleltetéssel áll le
+        StartCoroutine(StopGameWithDelay());
     }
 
-    private void Update()
+    public void RestartLevel ()
     {
-        // Debug teszt: R billentyűvel újraindít
-        if (isGameOver && Input.GetKeyDown(KeyCode.R))
-        {
-            RestartGame();
-        }
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    // Meghívható ha a játékos meghal
-    public void GameOver()
+    public void QuitToMainMenu ()
     {
-        if (isGameOver) return;
+        SceneManager.LoadScene("Main Menu");
+    }
 
-        isGameOver = true;
-        Debug.Log("Game Over!");
-        onGameOver?.Invoke();
+    private IEnumerator StopGameWithDelay()
+    {
+        yield return new WaitForSeconds(delayBeforeStop);
         Time.timeScale = 0f;
-    }
-
-    // Újraindítás
-    public void RestartGame()
-    {
-        isGameOver = false;
-        score = 0;
-
-        Debug.Log("Restarting game...");
-        onGameRestart?.Invoke();
-
-        // Jelenlegi pálya újratöltése
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
-    // Pont hozzáadása
-    public void AddScore(int amount)
-    {
-        score += amount;
-        Debug.Log("Pont: " + score);
-        onScoreChanged?.Invoke(score);
     }
 }

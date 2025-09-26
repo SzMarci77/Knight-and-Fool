@@ -19,21 +19,17 @@ public class Damageable : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
     public float invincibilityTime = 0.25f;
 
+    private float timeSinceHit = 0;
+
     public int MaxHealth
     {
         get => _maxHealth;
         set => _maxHealth = value;
     }
 
-
-    private float timeSinceHit = 0;
-
     public bool IsAlive
     {
-        get
-        {
-            return _isAlive;
-        }
+        get => _isAlive;
         set
         {
             _isAlive = value;
@@ -56,7 +52,7 @@ public class Damageable : MonoBehaviour
             _health = Mathf.Clamp(value, 0, MaxHealth);
             healthChanged?.Invoke(_health, MaxHealth);
 
-            //if health = 0, character is no longer alive
+            //ha elfogy az élet
             if (_health <= 0 && IsAlive)
             {
                 IsAlive = false;
@@ -66,14 +62,8 @@ public class Damageable : MonoBehaviour
 
     public bool LockVelocity
     {
-        get
-        {
-            return animator.GetBool(Animations.lockVelocity);
-        }
-        set
-        {
-            animator.SetBool(Animations.lockVelocity, value);
-        }
+        get => animator.GetBool(Animations.lockVelocity);
+        set => animator.SetBool(Animations.lockVelocity, value);
     }
 
     private void Awake()
