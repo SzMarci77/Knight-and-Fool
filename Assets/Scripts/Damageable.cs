@@ -19,6 +19,9 @@ public class Damageable : MonoBehaviour
     [SerializeField] private bool isInvincible = false;
     public float invincibilityTime = 0.25f;
 
+    [Header("Score Settings")]
+    [SerializeField] private int scoreValue = 100;
+
     private float timeSinceHit = 0;
 
     public int MaxHealth
@@ -38,8 +41,13 @@ public class Damageable : MonoBehaviour
 
             if(value == false)
             {
+                if(UIManager.Instance != null)
+                {
+                    UIManager.Instance.AddScore(scoreValue);
+                }
                 damageableDeath.Invoke();
             }
+
         }
     }
 
