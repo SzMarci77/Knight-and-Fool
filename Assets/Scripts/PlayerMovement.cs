@@ -10,11 +10,18 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    public float jumpStrength = 10f;
-    public float walkSpeed = 5f;
-    public float airWalkSpeed = 3f;
-    public float runSpeed = 8f;
+    [SerializeField] private float jumpStrength = 10f;
+    [SerializeField] private float walkSpeed = 5f;
+    [SerializeField] private float airWalkSpeed = 3f;
+    [SerializeField] private float runSpeed = 8f;
 
+    [SerializeField] private bool _isMoving = false;
+    [SerializeField] private bool _isRunning = false;
+
+    [SerializeField] private float acceleration = 15f;
+    [SerializeField] private float deceleration = 20f;
+
+    private float currentTargetSpeed = 0f;
     private Vector3 originalScale;
 
     Vector2 moveInput;
@@ -55,8 +62,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-
-    [SerializeField] private bool _isMoving = false;
     public bool IsMoving
     {
         get => _isMoving;
@@ -67,8 +72,6 @@ public class PlayerMovement : MonoBehaviour
                 animator.SetBool(Animations.isMoving, value);
         } 
     }
-
-    [SerializeField] private bool _isRunning = false;
 
     public bool IsRunning
     {
@@ -115,8 +118,29 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(!damageable.LockVelocity)
-            rb.velocity = new Vector2(moveInput.x * CurrentMoveSpeed, rb.velocity.y);
+        if (!damageable.LockVelocity)
+        {
+            float targetSpeed;
+
+            if (Mathf.Abs(moveInput.x) > 0.01f)
+            {
+                targetSpeed = moveInput.x * (touchingDirections.IsGrounded ? CurrentMoveSpeed : runSpeed);
+            }
+            else
+            {
+                targetSpeed = 0f;
+            }
+
+            float currentSpeed = rb.velocity.x;
+
+            float accelRate = (Mathf.Abs(moveInput.x) > 0.01f) ? acceleration : deceleration;
+            if (!touchingDirections.IsGrounded)
+                accelRate *= 0.5f;
+
+            currentTargetSpeed = Mathf.MoveTowards(currentTargetSpeed, targetSpeed, accelRate * Time.fixedDeltaTime);
+
+            rb.velocity = new Vector2(currentTargetSpeed, rb.velocity.y);
+        }
 
         if (animator != null)
             animator.SetFloat(Animations.yVelocity, rb.velocity.y);

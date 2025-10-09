@@ -101,6 +101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthAmount: 20
   spinRotationSpeed: {x: 0, y: 100, z: 0}
+  pickupEffect: {fileID: 5968258508376443238, guid: 64fe395bdf23dd5429089a4448164900, type: 3}
 --- !u!61 &5031080501944541837
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -156,7 +157,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bcfdf8a1ee6f1ed4d991b1bcae13e710, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 5c60ea8bd87244d4c8fe16b80d5f7b4e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.04
   m_Pitch: 1

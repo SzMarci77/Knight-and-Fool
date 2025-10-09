@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class HealthPickUp : MonoBehaviour
 {
-    public int healthAmount = 20;
-    public Vector3 spinRotationSpeed = new Vector3(0, 100, 0);
+    [SerializeField] private int healthAmount = 20;
+    [SerializeField] private Vector3 spinRotationSpeed = new Vector3(0, 100, 0);
+    [SerializeField] private GameObject pickupEffect;
 
     AudioSource pickUpSource;
 
@@ -25,15 +24,18 @@ public class HealthPickUp : MonoBehaviour
 
         if (damageable && damageable.Health < damageable.MaxHealth)
         {
-            bool waxHealed = damageable.Heal(healthAmount);
+            bool maxHealed = damageable.Heal(healthAmount);
 
-            if (waxHealed)
+            if (maxHealed)
             {
                 // Hang effekt
                 if (pickUpSource)
                 {
                     AudioSource.PlayClipAtPoint(pickUpSource.clip, gameObject.transform.position, pickUpSource.volume);
                 }
+                if (pickupEffect != null)
+                    Instantiate(pickupEffect, transform.position, Quaternion.identity);
+
                 Destroy(gameObject);
             }
             

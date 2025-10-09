@@ -2,7 +2,7 @@
 - Project name: Platformer_Game
 - Unity version: Unity 2022.3.62f1
 - Active game object:
-  - Name: Button
-  - Tag: Untagged
-  - Layer: UI
+  - Name: Player
+  - Tag: Player
+  - Layer: Player
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
