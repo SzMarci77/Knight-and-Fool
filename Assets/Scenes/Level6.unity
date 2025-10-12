@@ -3110,6 +3110,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pauseMenuUI: {fileID: 62181621}
+  pauseOpenSound: {fileID: 0}
+  pauseCloseSound: {fileID: 0}
+  audioSource: {fileID: 0}
 --- !u!1 &422214434
 GameObject:
   m_ObjectHideFlags: 0
