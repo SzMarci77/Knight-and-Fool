@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Damageable : MonoBehaviour
+public class Damageable : MonoBehaviour, IDamageable
 {
     public UnityEvent<int, Vector2> damageableHit;
     public UnityEvent damageableDeath;
@@ -73,6 +73,7 @@ public class Damageable : MonoBehaviour
         get => animator.GetBool(Animations.lockVelocity);
         set => animator.SetBool(Animations.lockVelocity, value);
     }
+    
 
     private void Awake()
     {
@@ -130,5 +131,10 @@ public class Damageable : MonoBehaviour
             return true;
         }
         return false;
+    }
+
+    public void Damagee(int damageAmount, Vector2 knockbackAngle)
+    {
+        Hit(damageAmount, knockbackAngle);
     }
 }

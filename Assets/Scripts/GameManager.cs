@@ -2,6 +2,7 @@
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using System.Collections;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
 
     public void GameOver ()
     {

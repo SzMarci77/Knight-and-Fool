@@ -5,6 +5,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(TouchingDir), typeof(Damageable))]
 
@@ -56,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+
         if (!damageable.LockVelocity)
         {
             float targetSpeed;
