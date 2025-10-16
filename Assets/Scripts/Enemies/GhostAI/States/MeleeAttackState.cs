@@ -12,31 +12,7 @@ public class MeleeAttackState : EnemyBaseState
     public override void Enter()
     {
         base.Enter();
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(enemy.ledgeDetector.position, enemy.stats.meleeAttackDistance, enemy.playerLayer);
 
-        foreach (Collider2D hitCollider in hitColliders)
-        {
-            IDamageable damageable = hitCollider.GetComponent<IDamageable>();
-            Rigidbody2D rb = hitCollider.GetComponent<Rigidbody2D>();
-
-            if (damageable != null && rb != null)
-            {
-                // Számoljuk ki az ellenfél és a játékos közti irányvektort
-                Vector2 knockbackDir = (hitCollider.transform.position - enemy.transform.position).normalized;
-
-                // Sebzés
-                damageable.Damagee(enemy.stats.damageAmount, knockbackDir * enemy.stats.knockbackForce);
-
-                // Közvetlenül a Rigidbody2D-re is alkalmazzuk, a Hit után
-                rb.velocity = new Vector2(
-                    knockbackDir.x * enemy.stats.knockbackForce,
-                    enemy.stats.knockbackAngle.y * enemy.stats.knockbackForce
-                );
-            }
-        }
-
-        // Támadás után visszaállás patrol state-re
-        enemy.SwitchState(enemy.patrolState);
     }
 
     public override void Exit()
@@ -52,5 +28,38 @@ public class MeleeAttackState : EnemyBaseState
     public override void PhysicsUpdate()
     {
         base.PhysicsUpdate();
+    }
+
+    public override void AnimationAttackTrigger()
+    {
+        base.AnimationAttackTrigger();
+
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(enemy.ledgeDetector.position, enemy.stats.meleeAttackDistance, enemy.playerLayer);
+
+        foreach (Collider2D hitCollider in hitColliders)
+        {
+            IDamageable damageable = hitCollider.GetComponent<IDamageable>();
+            Rigidbody2D rb = hitCollider.GetComponent<Rigidbody2D>();
+
+            if (damageable != null && rb != null)
+            {
+                Vector2 knockbackDir = (hitCollider.transform.position - enemy.transform.position).normalized;
+
+                damageable.Damagee(enemy.stats.damageAmount, knockbackDir * enemy.stats.knockbackForce);
+
+                rb.velocity = new Vector2(
+                    knockbackDir.x * enemy.stats.knockbackForce,
+                    enemy.stats.knockbackAngle.y * enemy.stats.knockbackForce
+                );
+            }
+        }
+    }
+
+    public override void AnimationFinishedTrigger()
+    {
+        base.AnimationFinishedTrigger();
+
+        enemy.SwitchState(enemy.patrolState);
+
     }
 }

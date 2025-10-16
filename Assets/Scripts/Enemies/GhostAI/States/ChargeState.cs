@@ -44,7 +44,11 @@ public class ChargeState : EnemyBaseState
             {
                 enemy.SwitchState(enemy.meleeAttackState);
             }
-            Charge();
+            else if (enemy.CheckIfShouldDodge())
+            {
+                enemy.SwitchState(enemy.dodgeState);
+            }
+                Charge();
         }
            
     }

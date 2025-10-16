@@ -27,8 +27,11 @@ public class PlayerDetectedState : EnemyBaseState
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        if(!enemy.CheckForPlayer())
+        if (enemy.CheckIfShouldDodge())
+        {
+            enemy.SwitchState(enemy.dodgeState);
+        }
+        else if (!enemy.CheckForPlayer())
         {
             enemy.SwitchState(enemy.patrolState);
         }

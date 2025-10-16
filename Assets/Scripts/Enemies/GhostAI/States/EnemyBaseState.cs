@@ -15,11 +15,12 @@ public class EnemyBaseState
 
     public virtual void Enter()
     {
-        Debug.Log("Entered " + animationName);
+        enemy.anim.SetBool(animationName, true);
     }
 
     public virtual void Exit()
     {
+        enemy.anim.SetBool(animationName, false);
 
     }
 
@@ -31,6 +32,14 @@ public class EnemyBaseState
     public virtual void PhysicsUpdate()
     {
 
+    }
+
+    public virtual void AnimationFinishedTrigger()
+    {
+    }
+
+    public virtual void AnimationAttackTrigger()
+    {
     }
 
 }

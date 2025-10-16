@@ -2060,8 +2060,28 @@ PrefabInstance:
       value: Particle System
       objectReference: {fileID: 0}
     - target: {fileID: 3197567167062792190, guid: 474fd521ca99f554899d85aef148727a, type: 3}
+      propertyPath: InitialModule.startSize.scalar
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197567167062792190, guid: 474fd521ca99f554899d85aef148727a, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197567167062792190, guid: 474fd521ca99f554899d85aef148727a, type: 3}
       propertyPath: EmissionModule.rateOverTime.scalar
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197567167062792190, guid: 474fd521ca99f554899d85aef148727a, type: 3}
+      propertyPath: InitialModule.startSize.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197567167062792190, guid: 474fd521ca99f554899d85aef148727a, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3197567167062792190, guid: 474fd521ca99f554899d85aef148727a, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3897740640562944672, guid: 474fd521ca99f554899d85aef148727a, type: 3}
       propertyPath: m_LocalScale.x

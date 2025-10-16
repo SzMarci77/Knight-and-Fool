@@ -137,4 +137,8 @@ public class Damageable : MonoBehaviour, IDamageable
     {
         Hit(damageAmount, knockbackAngle);
     }
+
+    public void Damagee(int damageAmount, float KBForce, Vector2 KBAngle)
+    {
+    }
 }

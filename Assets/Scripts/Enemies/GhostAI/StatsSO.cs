@@ -6,6 +6,12 @@ using UnityEngine;
 
 public class StatsSO : ScriptableObject
 {
+    [Header("General")]
+    public int maxHealth;
+
+    [Header("Prefabs")]
+    public GameObject deathParticle;
+
     [Header("Patrol State")]
     public float speed;
     public float raycastDistance;
@@ -24,4 +30,10 @@ public class StatsSO : ScriptableObject
     public int damageAmount;
     public Vector2 knockbackAngle;
     public float knockbackForce;
+
+    [Header("Dodge State")]
+    public Vector2 dodgeAngle;
+    public float dodgeForce;
+    public float dodgeDetectDistance;
+    public float dodgeCooldown;
 }

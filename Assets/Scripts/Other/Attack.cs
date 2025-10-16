@@ -9,6 +9,7 @@ public class Attack : MonoBehaviour
     [Header("Attack Settings")]
     public int attackDamage = 10;
     public Vector2 knockback = Vector2.zero;
+    public float KBForce = 5f;
 
     private void Awake()
     {
@@ -23,6 +24,13 @@ public class Attack : MonoBehaviour
     #endif
 
         Damageable damageable = collision.GetComponent<Damageable>();
+        IDamageable damageable1 = collision.GetComponent<IDamageable>();
+
+        if(damageable1 != null)
+        {
+            Vector2 deliveredKnockback1 = transform.parent.localScale.x > 0 ? knockback : new Vector2(-knockback.x, knockback.y);
+            damageable1.Damagee(attackDamage, KBForce, deliveredKnockback1);
+        }
 
         if (damageable != null && damageable.IsAlive)
         {

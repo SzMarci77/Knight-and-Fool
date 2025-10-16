@@ -19,13 +19,17 @@ public class PatrolState : EnemyBaseState
     {
         base.LogicUpdate();
 
-        if (enemy.CheckForPlayer())
+        if (enemy.CheckIfShouldDodge())
+        {
+            enemy.SwitchState(enemy.dodgeState);
+        }
+        else if (enemy.CheckForPlayer())
         {
             enemy.SwitchState(enemy.playerDetectedState);
         }
-        if (enemy.CheckForObstacles())
+        else if (enemy.CheckForObstacles())
         {
-            Rotate();
+            enemy.Rotate();
         }
     }
 
@@ -41,11 +45,5 @@ public class PatrolState : EnemyBaseState
         {
            enemy.rb.velocity = new Vector2(-enemy.stats.speed, enemy.rb.velocity.y);
         }
-    }
-
-    private void Rotate()
-    {    
-        enemy.transform.Rotate(0, 180, 0);
-        enemy.facingDirection = -enemy.facingDirection;
     }
 }

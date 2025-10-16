@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 431573d0a30e6b847af36a5da2bbcc4b, type: 3}
   m_Name: GhostStats
   m_EditorClassIdentifier: 
+  maxHealth: 20
+  deathParticle: {fileID: 4088081112036676557, guid: 293b3846373121b428e0afd88d6ddac4, type: 3}
   speed: 2
   raycastDistance: 1.5
   playerDetectDistance: 5
@@ -21,5 +23,9 @@ MonoBehaviour:
   chargeSpeed: 4
   meleeAttackDistance: 1
   damageAmount: 10
-  knockbackAngle: {x: 2, y: 1}
-  knockbackForce: 2
+  knockbackAngle: {x: 10, y: 1}
+  knockbackForce: 10
+  dodgeAngle: {x: 2, y: 1}
+  dodgeForce: 5
+  dodgeDetectDistance: 1
+  dodgeCooldown: 1
