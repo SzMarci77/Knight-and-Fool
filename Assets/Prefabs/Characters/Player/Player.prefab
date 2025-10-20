@@ -47,6 +47,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 10
   knockback: {x: 2, y: 0}
+  KBForce: 5
 --- !u!61 &1689789160392535830
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -139,6 +140,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 12
   knockback: {x: 0, y: 0}
+  KBForce: 5
 --- !u!61 &843830001725102782
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -320,14 +322,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f4760e2b0e58494b96b906739491510, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jumpStrength: 11
   walkSpeed: 5
   airWalkSpeed: 4
   runSpeed: 8
-  _isMoving: 0
-  _isRunning: 0
   acceleration: 15
   deceleration: 20
+  jumpStrength: 11
+  coyoteTime: 0.15
+  jumpBufferTime: 0.1
+  _isMoving: 0
+  _isRunning: 0
 --- !u!114 &7428707760786510896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -613,7 +617,7 @@ TrailRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4585733980677573904}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -626,7 +630,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -647,31 +651,49 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.4
+  m_Time: 0.2
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 1.0383537
+    widthMultiplier: 0.680907
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
-        time: 0
-        value: 1
+        time: 0.0057411194
+        value: 0.6444435
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.33333334
         outWeight: 0.33333334
+      - serializedVersion: 3
+        time: 0.77844656
+        value: 0.31111693
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 0.99473673
+        value: 0.1756615
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.50364536, g: 0.8126323, b: 0.82641506, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 0}
+      key0: {r: 0.58438593, g: 0.94716984, b: 0.91014355, a: 1}
+      key1: {r: 1, g: 1, b: 1, a: 0}
+      key2: {r: 0, g: 0, b: 0, a: 1}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
       key5: {r: 0, g: 0, b: 0, a: 0}
@@ -687,7 +709,7 @@ TrailRenderer:
       ctime7: 0
       atime0: 0
       atime1: 65535
-      atime2: 0
+      atime2: 65535
       atime3: 0
       atime4: 0
       atime5: 0
@@ -756,6 +778,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 15
   knockback: {x: 2, y: 0}
+  KBForce: 5
 --- !u!61 &7584092988724476712
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -848,6 +871,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 18
   knockback: {x: 0, y: 0}
+  KBForce: 5
 --- !u!61 &8172536818869424333
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -940,6 +964,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackDamage: 25
   knockback: {x: 5, y: 0}
+  KBForce: 5
 --- !u!61 &100373600259568514
 BoxCollider2D:
   m_ObjectHideFlags: 0

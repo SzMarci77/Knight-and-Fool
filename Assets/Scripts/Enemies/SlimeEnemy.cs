@@ -13,6 +13,7 @@ public class SlimeEnemy : MonoBehaviour
         Move();
     }
 
+
     private void Move()
     {
         distToPoint = Vector2.Distance(transform.position, wayPoints[nextWaypoint].transform.position);
