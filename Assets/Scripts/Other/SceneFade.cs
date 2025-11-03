@@ -21,10 +21,12 @@ public class SceneFade : MonoBehaviour
         if (imageToFade != null)
             StartCoroutine(FadeCoroutine(Color.clear, Color.black, () =>
             {
+                Time.timeScale = 1f;
                 SceneManager.LoadScene(buildIndex);
             }));
         else
-            SceneManager.LoadScene(buildIndex);
+            Time.timeScale = 1f;
+        SceneManager.LoadScene(buildIndex);
     }
 
     private IEnumerator FadeCoroutine(Color _from, Color _to, Action _onEnd)

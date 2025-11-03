@@ -23,11 +23,14 @@ public class WinScreen : MonoBehaviour
 
     private void UnlockNextLevel()
     {
-        if(SceneManager.GetActiveScene().buildIndex >= PlayerPrefs.GetInt("ReachedIndex"))
+        int currentIndex = SceneManager.GetActiveScene().buildIndex;
+        int unlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+
+        if (unlockedLevel <= currentIndex)
         {
-            PlayerPrefs.SetInt("ReachedIndex", SceneManager.GetActiveScene().buildIndex + 1);
-            PlayerPrefs.SetInt("UnlockedLevel", PlayerPrefs.GetInt("UnlockedLevel", 1) + 1);
+            PlayerPrefs.SetInt("UnlockedLevel", currentIndex + 1);
             PlayerPrefs.Save();
+            Debug.Log("Feloldott szint: " + (currentIndex + 1));
         }
     }
 

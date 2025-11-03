@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        Time.timeScale = 1f;
+    }
 
     public void GameOver ()
     {

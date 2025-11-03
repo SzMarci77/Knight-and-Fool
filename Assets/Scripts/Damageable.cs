@@ -36,10 +36,14 @@ public class Damageable : MonoBehaviour, IDamageable
         set
         {
             _isAlive = value;
-            animator.SetBool(Animations.isAlive, value);
+
+            if( animator != null)
+            {
+                animator.SetBool(Animations.isAlive, value);
+            }
             Debug.Log("IsAlive set " + value);
 
-            if(value == false)
+            if (value == false)
             {
                 if(UIManager.Instance != null)
                 {
@@ -106,7 +110,10 @@ public class Damageable : MonoBehaviour, IDamageable
             damageableHit?.Invoke(damage, knockback);
             CharacterEvents.characterDamaged.Invoke(gameObject, damage);
 
-            StartCoroutine(InvincibilityCoroutine());
+            if (isActiveAndEnabled)
+            {
+                StartCoroutine(InvincibilityCoroutine());
+            }
             return true;
         }
         return false;
@@ -115,7 +122,35 @@ public class Damageable : MonoBehaviour, IDamageable
     private IEnumerator InvincibilityCoroutine()
     {
         isInvincible = true;
-        yield return new WaitForSeconds(invincibilityTime);
+
+        SpriteRenderer sr = GetComponent<SpriteRenderer>();
+        Color originalColor = Color.white;
+
+        if (sr != null)
+        {
+            originalColor = sr.color;
+        }
+
+        float elapsed = 0f;
+        float flashSpeed = 0.1f;
+
+        while (elapsed < invincibilityTime)
+        {
+            if (sr != null)
+            {
+                sr.enabled = !sr.enabled;
+            }
+
+            yield return new WaitForSeconds(flashSpeed);
+            elapsed += flashSpeed;
+        }
+
+        if (sr != null)
+        {
+            sr.enabled = true;
+            sr.color = originalColor;
+        }
+
         isInvincible = false;
     }
 

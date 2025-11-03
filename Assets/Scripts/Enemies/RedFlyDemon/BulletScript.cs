@@ -31,6 +31,7 @@ public class BulletScript : MonoBehaviour
         if (damageable != null)
         {
             damageable.Hit(damage, Vector2.zero);
+
             Destroy(gameObject);
         }
         else if (!other.isTrigger)

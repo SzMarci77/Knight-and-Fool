@@ -130,7 +130,7 @@ public class KnightEnemy : MonoBehaviour
     }
     public void OnHit(int damage, Vector2 knockback)
     {
-        rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
+      rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);
     }
 
     public void OnCliffDetected()

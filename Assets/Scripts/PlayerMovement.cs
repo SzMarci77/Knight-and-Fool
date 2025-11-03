@@ -237,7 +237,6 @@ public class PlayerMovement : MonoBehaviour
     }
     public void OnJump(InputAction.CallbackContext context)
     {
-        //Földön van-e a játékos + életben
         if(context.started && coyoteTimer > 0f && CanMove)
         {
             if (animator != null)
@@ -252,6 +251,7 @@ public class PlayerMovement : MonoBehaviour
             jumpBufferTimer = jumpBufferTime;
         }
     }
+
     public void OnHit(int damage, Vector2 knockback)
     {
         rb.velocity = new Vector2(knockback.x, rb.velocity.y + knockback.y);

@@ -33,12 +33,12 @@ namespace Bundos.MovingPlatforms
         public WaypointPathType pathType = WaypointPathType.Closed;
         public WaypointBehaviorType behaviorType = WaypointBehaviorType.Loop;
 
-        public float moveSpeed = 5f; // Speed of movement
-        public float stopDistance = 0.1f; // Distance to consider reaching a waypoint
+        public float moveSpeed = 5f;
+        public float stopDistance = 0.1f;
 
         private int lastWaypointIndex = -1;
         private int currentWaypointIndex = 0;
-        private int direction = 1; // 1 for forward, -1 for reverse
+        private int direction = 1;
 
         private void Update()
         {

@@ -1,0 +1,17 @@
+behaviors:
+  EnemyAgent:
+    network_settings:
+      normalize: false
+      hidden_units: 128
+      num_layers: 2
+    max_steps: 300000
+    behavioral_cloning:
+      demo_path: Assets/Demonstrations/EnemyDemo.demo
+      demo_path:
+         Assets/Demonstrations/EnemyDemo.demo,
+         Assets/Demonstrations/EnemyDemo1,
+         Assets/Demonstrations/EnemyDemo2
+      strength: 1.0
+      steps: 300000
+      batch_size: 1024
+      num_epoch: 3
