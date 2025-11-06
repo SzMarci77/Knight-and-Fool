@@ -2,33 +2,40 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+
+[RequireComponent(typeof(Rigidbody2D))]
 public class EnemyAI : MonoBehaviour
 {
+    [Header("Target & Movement")]
     public Transform target;
-
     public float speed = 200f;
     public float nextWaypointDist = 3f;
     public float detectionRange = 10f;
-
     public Transform birdGFX;
     public Animator animator;
 
-    //Pihenő pontok
+    [Header("Rest Points")]
     public List<Transform> restPoints;
 
-    Path path;
-    int currentWaypoint = 0;
+    [Header("Combat Settings")]
+    [SerializeField] private int contactDamage = 1;
+    [SerializeField] private float knockbackForce = 5f;
+    [SerializeField] private float damageCooldown = 1f;
+    [SerializeField] private float attackRange = 0.5f;
+    [SerializeField] private LayerMask playerLayer;
 
-    Seeker seeker;
-    Rigidbody2D rb;
 
-    Transform currentTarget;
+    private float lastDamageTime;
+    private Path path;
+    private int currentWaypoint = 0;
+    private Seeker seeker;
+    private Rigidbody2D rb;
+    private Transform currentTarget;
 
     void Start()
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
-
         InvokeRepeating("UpdatePath", 0f, 0.5f);
 
     }
@@ -87,6 +94,8 @@ public class EnemyAI : MonoBehaviour
             return;
         }
 
+        HandlePlayerContactDamage();
+
         float distanceToTarget = Vector2.Distance(rb.position, currentTarget.position);
 
         if(currentTarget != target && distanceToTarget < nextWaypointDist)
@@ -125,6 +134,29 @@ public class EnemyAI : MonoBehaviour
         else if (force.x <= -0.01f)
         {
             birdGFX.localScale = new Vector3(-1f, 1f, 1f);
+        }
+    }
+
+    private void HandlePlayerContactDamage()
+    {
+        if (Time.time < lastDamageTime + damageCooldown)
+            return;
+
+        Collider2D hitPlayer = Physics2D.OverlapCircle(transform.position, attackRange, playerLayer);
+        if (hitPlayer != null)
+        {
+            Damageable dmg = hitPlayer.GetComponent<Damageable>();
+            if (dmg != null)
+            {
+                Vector2 knockbackDir = (hitPlayer.transform.position - transform.position).normalized;
+                Vector2 knockback = knockbackDir * knockbackForce;
+
+                bool hit = dmg.Hit(contactDamage, knockback);
+                if (hit)
+                {
+                    lastDamageTime = Time.time;
+                }
+            }
         }
     }
 }

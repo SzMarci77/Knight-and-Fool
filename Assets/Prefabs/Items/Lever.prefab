@@ -362,7 +362,7 @@ MonoBehaviour:
   interactKey: 113
   interactText: {fileID: 118808167988793413}
   leverAnimator: {fileID: 6353171684367609334}
-  leverSound: {fileID: 0}
+  leverSound: {fileID: 3683020297135035984}
 --- !u!61 &6791434458060300555
 BoxCollider2D:
   m_ObjectHideFlags: 0
