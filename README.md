@@ -67,7 +67,6 @@
 * **Programozási nyelv:** C#
 * **Platformok:** Windows
 * **Fejlesztő:** Szabó Marcell
-* 
 ---
 
 ## 🚀 Fejlesztési terv / TODO
