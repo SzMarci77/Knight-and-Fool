@@ -74,15 +74,4 @@ public class LevelLoader : MonoBehaviour
             }
         }
     }
-
-    private void Update()
-    {
-        // Debug: törlés K gombbal
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            PlayerPrefs.DeleteKey("UnlockedLevel");
-            PlayerPrefs.Save();
-            Debug.Log("Progress Reset");
-        }
-    }
 }

@@ -49,16 +49,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    //Temporary input for testing
-    private void Update()
-    {
-        // HighScore reset
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            ResetHighScore();
-        }
-    }
-
     private void OnEnable()
     {
         CharacterEvents.characterDamaged += (CharacterTookDamage);
@@ -73,7 +63,6 @@ public class UIManager : MonoBehaviour
 
     public void CharacterTookDamage(GameObject character, int damageReceived)
     {
-        // Sebzés esetén szöveg létrehozása a karakter pozícióján
         Vector3 spawnPosition = Camera.main.WorldToScreenPoint(character.transform.position + Vector3.up * 1f);
         TMP_Text tmpText = Instantiate(damageTextPrefab, spawnPosition, Quaternion.identity, gameCanvas.transform).GetComponent<TMP_Text>();
         tmpText.text = damageReceived.ToString();
@@ -87,9 +76,6 @@ public class UIManager : MonoBehaviour
         tmpText.text = healthRestored.ToString();
     }
 
-
-
-    // ***** Score management *****
     public void AddScore(int amount)
     {
         score += amount;
@@ -147,8 +133,6 @@ public class UIManager : MonoBehaviour
             highScoreText.text = highScore.ToString("D4");
         }
     }
-
-    // ***** HIGHSCORE FLASHING *****
     private IEnumerator BlinkHighScoreText()
     {
         isFlashing = true;
